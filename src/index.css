@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url("./pexels-monstera-7794360.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* * {
+  border: 2px solid black ! important;
+} */
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+root-layout {
+  height: 100vh;
+
+}
+
+nav a.active {
+  background-color: rgb(252, 39, 39);
+  color: white
+}
+
+a {
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  background: white
+}
+
+.secondary-navs a.active {
+
+  background: rgba(117, 144, 180, 0.76);
+  color: white;
+}
+
+.secondary-navs a {
+  border: 4px solid rgb(111, 114, 145)
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
