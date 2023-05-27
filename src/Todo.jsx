@@ -4,13 +4,61 @@ import { FaEllipsisH } from "react-icons/fa";
 import { ImImages } from "react-icons/im";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRef } from "react";
 
-import ListItem from "./ListItem";
+//import ListItem from "./ListItem";
 
 function Todo({ listItems, setListItems, setCount, count }) {
   const [formVisiblity, setFormVisibility] = useState(false);
   const [input, setInput] = useState("");
+  const [drag, setDrag] = useState(null);
+  const [over, setOver] = useState(null);
 
+  // statuses array
+
+  // const statusesArr = [
+  //   { container: "Todo" },
+  //   { container: "Done" },
+  //   { container: "Doing" },
+  // ];
+
+  // {statusesArr.map((array,index) => { 
+    
+  //   return (<></>)
+  //  })}
+  //save reference for dragItem and dragOverItem
+
+  const dragItem = useRef();
+  const dragOverItem = useRef();
+
+  //handle Sorting of items
+  const handleSort = () => {
+    //duplicate the list of items
+    let _listItems = [...listItems];
+    console.log("_listItems", _listItems);
+    //remove and save the dragged item content
+
+    const draggedItemContent = _listItems.splice(dragItem.current, 1)[0];
+    console.log(
+      "draggedItemContent",
+      draggedItemContent,
+      "index",
+      dragOverItem.current,
+      dragItem.current,
+      drag,
+      over
+    );
+    //switch position
+    _listItems.splice(dragOverItem.current, 0, draggedItemContent);
+
+    //reset the list of items
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setListItems(_listItems);
+    console.log("_listItems 2", _listItems);
+    console.log("bottom", listItems, _listItems);
+  };
+  //console.log(listItems);
   return (
     <>
       <div className="py-6 px-4 rounded-lg bg-[#f1f2f4]    flex-col flex sm:w-[20rem] sm:grow-0 grow w-full h-full shadow-xl cursor-pointer gap-[0.5rem]  ">
@@ -23,15 +71,57 @@ function Todo({ listItems, setListItems, setCount, count }) {
           </button>
         </div>
         <div className="flex flex-col gap-3 w-full  ">
-          {listItems.map((listItem, index) => {
+          {listItems.map((item, index) => {
             return (
-              <ListItem
+              // <ListItem
+              //   key={index}
+              //   index={index}
+              //   item={item.input}
+              //   setListItems={setListItems}
+              //   listItems={listItems}
+              // />
+              <div
+                // ref={drag ? dragItem : dragOverItem}
+                onDragStart={(e) => {
+                  // setDrag((prev) => !prev);
+                  dragItem.current = index;
+                  setDrag(index);
+                  console.log(index, "is being dragged", dragItem.current);
+                }}
+                onDragEnter={(e) => {
+                  // setDrag((prev) => !prev);
+                  setOver(index);
+                  dragOverItem.current = index;
+                  console.log("drag entered", index, dragOverItem.current);
+                }}
+                onDragEnd={handleSort}
+                onDragOver={(e, index) => {
+                  e.preventDefault();
+                  setOver(index);
+                }}
+                draggable
+                id={`draggable_item_${index}`}
                 key={index}
-                index={listItem.id}
-                listItem={listItem}
-                setListItems={setListItems}
-                listItems={listItems}
-              />
+                className={`flex items-start border-[1px] cursor-move border-inherit shadow-lg  h-full  w-full break-words rounded-lg bg-white hover:bg-black/20 `}
+              >
+                <p className=" w-full h-full overflow-hidden    grow   border-black  text-ellipsis   break-words py-2 px-4 ">
+                  {item.input}
+                </p>
+
+                <button
+                  className="p-2 w-fit  rounded-md"
+                  onClick={() => {
+                    const newList = listItems.filter(
+                      (listItem) => listItem.id !== index
+                    );
+                    console.log(newList);
+                    setListItems(newList);
+                    //   setFormVisibility((prev) => !prev);
+                  }}
+                >
+                  <AiOutlineClose className="w-4 text-xl " />
+                </button>
+              </div>
             );
           })}
         </div>
@@ -81,6 +171,7 @@ function Todo({ listItems, setListItems, setCount, count }) {
                       {
                         input: input,
                         id: Math.random() * 200,
+                        status:"Todo"
                       },
                     ]);
                     setInput("");
