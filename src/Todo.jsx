@@ -18,12 +18,12 @@ function Todo({ listItems, setListItems, setCount, count }) {
 
   // const statusesArr = [
   //   { container: "Todo" },
-  //   { container: "Done" },
+  //   { container: "Todo" },
   //   { container: "Doing" },
   // ];
 
-  // {statusesArr.map((array,index) => { 
-    
+  // {statusesArr.map((array,index) => {
+
   //   return (<></>)
   //  })}
   //save reference for dragItem and dragOverItem
@@ -35,19 +35,19 @@ function Todo({ listItems, setListItems, setCount, count }) {
   const handleSort = () => {
     //duplicate the list of items
     let _listItems = [...listItems];
-    console.log("_listItems", _listItems);
+  //  console.log("_listItems", _listItems);
     //remove and save the dragged item content
 
     const draggedItemContent = _listItems.splice(dragItem.current, 1)[0];
-    console.log(
-      "draggedItemContent",
-      draggedItemContent,
-      "index",
-      dragOverItem.current,
-      dragItem.current,
-      drag,
-      over
-    );
+    //// console.log(
+    //   "draggedItemContent",
+    //   draggedItemContent,
+    //   "index",
+    //   dragOverItem.current,
+    //   dragItem.current,
+    //   drag,
+    //   over
+    // );
     //switch position
     _listItems.splice(dragOverItem.current, 0, draggedItemContent);
 
@@ -55,8 +55,8 @@ function Todo({ listItems, setListItems, setCount, count }) {
     dragItem.current = null;
     dragOverItem.current = null;
     setListItems(_listItems);
-    console.log("_listItems 2", _listItems);
-    console.log("bottom", listItems, _listItems);
+  //  console.log("_listItems 2", _listItems);
+  //  console.log("bottom", listItems, _listItems);
   };
   //console.log(listItems);
   return (
@@ -86,13 +86,13 @@ function Todo({ listItems, setListItems, setCount, count }) {
                   // setDrag((prev) => !prev);
                   dragItem.current = index;
                   setDrag(index);
-                  console.log(index, "is being dragged", dragItem.current);
+                //  console.log(index, "is being dragged", dragItem.current);
                 }}
                 onDragEnter={(e) => {
                   // setDrag((prev) => !prev);
                   setOver(index);
                   dragOverItem.current = index;
-                  console.log("drag entered", index, dragOverItem.current);
+                //  console.log("drag entered", index, dragOverItem.current);
                 }}
                 onDragEnd={handleSort}
                 onDragOver={(e, index) => {
@@ -108,19 +108,7 @@ function Todo({ listItems, setListItems, setCount, count }) {
                   {item.input}
                 </p>
 
-                <button
-                  className="p-2 w-fit  rounded-md"
-                  onClick={() => {
-                    const newList = listItems.filter(
-                      (listItem) => listItem.id !== index
-                    );
-                    console.log(newList);
-                    setListItems(newList);
-                    //   setFormVisibility((prev) => !prev);
-                  }}
-                >
-                  <AiOutlineClose className="w-4 text-xl " />
-                </button>
+          
               </div>
             );
           })}
@@ -170,10 +158,11 @@ function Todo({ listItems, setListItems, setCount, count }) {
                       ...listItems,
                       {
                         input: input,
-                        id: Math.random() * 200,
-                        status:"Todo"
+                        id: count,
+                        status: "Todo",
                       },
                     ]);
+                    setCount((prev) => prev + 1);
                     setInput("");
                   }}
                 >

@@ -18,7 +18,7 @@ function Doing({ listItems, setListItems, setCount, count }) {
 
   // const statusesArr = [
   //   { container: "Doing" },
-  //   { container: "Done" },
+  //   { container: "Doing" },
   //   { container: "Doing" },
   // ];
 
@@ -35,19 +35,11 @@ function Doing({ listItems, setListItems, setCount, count }) {
   const handleSort = () => {
     //duplicate the list of items
     let _listItems = [...listItems];
-    console.log("_listItems", _listItems);
+   // console.log("_listItems", _listItems);
     //remove and save the dragged item content
 
     const draggedItemContent = _listItems.splice(dragItem.current, 1)[0];
-    console.log(
-      "draggedItemContent",
-      draggedItemContent,
-      "index",
-      dragOverItem.current,
-      dragItem.current,
-      drag,
-      over
-    );
+
     //switch position
     _listItems.splice(dragOverItem.current, 0, draggedItemContent);
 
@@ -55,10 +47,10 @@ function Doing({ listItems, setListItems, setCount, count }) {
     dragItem.current = null;
     dragOverItem.current = null;
     setListItems(_listItems);
-    console.log("_listItems 2", _listItems);
-    console.log("bottom", listItems, _listItems);
+   // console.log("_listItems 2", _listItems);
+   // console.log("bottom", listItems, _listItems);
   };
-  //console.log(listItems);
+  ////console.log(listItems);
   return (
     <>
       <div className="py-6 px-4 rounded-lg bg-[#f1f2f4]    flex-col flex sm:w-[20rem] sm:grow-0 grow w-full h-full shadow-xl cursor-pointer gap-[0.5rem]  ">
@@ -86,13 +78,13 @@ function Doing({ listItems, setListItems, setCount, count }) {
                   // setDrag((prev) => !prev);
                   dragItem.current = index;
                   setDrag(index);
-                  console.log(index, "is being dragged", dragItem.current);
+                 // console.log(index, "is being dragged", dragItem.current);
                 }}
                 onDragEnter={(e) => {
                   // setDrag((prev) => !prev);
                   setOver(index);
                   dragOverItem.current = index;
-                  console.log("drag entered", index, dragOverItem.current);
+                 // console.log("drag entered", index, dragOverItem.current);
                 }}
                 onDragEnd={handleSort}
                 onDragOver={(e, index) => {
@@ -108,19 +100,7 @@ function Doing({ listItems, setListItems, setCount, count }) {
                   {item.input}
                 </p>
 
-                <button
-                  className="p-2 w-fit  rounded-md"
-                  onClick={() => {
-                    const newList = listItems.filter(
-                      (listItem) => listItem.id !== index
-                    );
-                    console.log(newList);
-                    setListItems(newList);
-                    //   setFormVisibility((prev) => !prev);
-                  }}
-                >
-                  <AiOutlineClose className="w-4 text-xl " />
-                </button>
+              
               </div>
             );
           })}
